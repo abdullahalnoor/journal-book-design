@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    *,
+    *::after,
+    *::before {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .journalList{
+      width: 500px;
+    margin-left: 100px;
+    }
+    .journalList, .journalSubList {
+      list-style: none;
+      line-height: 1.5;
+    }
+
+    .journalList a {
+      text-decoration: none;
+      text-transform: none;
+  
+    }
+    .journalList {
+      display: flex;
+    }
+    .journalList > li {
+      line-height: 1.6;
+      position: relative;
+    }
+    .journalSubList > li {
+      line-height: 1.6;
+     
+    }
+    .journalList a {
+      display: block;
+    
+      color: rgba(0, 0, 0, 0.931);
+    }
+ 
+    .journalSubList::before {
+      content: '';
+      position: absolute;
+      /* left: 3rem; */
+      top: -2.4rem;
+    }
+  
+  
+  
+    .journalSubList li:hover>.journalSubList {
+      top: 0;
+      left: 100%;
+    }
+    .journalList {
+      z-index: 1000;
+      flex-direction: column;
+    }
+  
+    .journalSubList {
+      position: initial;
+      /* margin-left: 1rem; */
+      opacity: initial;
+      visibility: initial;
+      display: none;
+      transition: initial;
+  
+    }
+  
+    .journalSubList::before {
+      display: none;
+    }
+
+    .journalSubList {
+      border-left: 2px dotted #d6d6d6;
+    }
+    
+    .journalSubList>li>a {
+      text-decoration: underline;
+    }
+    .journalSubList .journalSubList {
+      border-left: none;
+    }
+    .journalSubList .journalSubList>li>a {
+      color: #000;
+      text-decoration: none;
+    }
+    /* end of menu */
+
+    a.volume-heading{
+      color: rgb(0, 110, 255);
+      padding: 0 1rem;
+      font-size: 1.5rem;
+    }
+    a.issue-heading{
+      color: rgb(46, 123, 224);
+      padding: 0 1rem;
+      font-size: 1rem;
+    }
+
+    /* abstact desing */
+    .abstract{
+      padding: 0 5px 1rem;
+      display: flex;
+      flex-direction: column;
+      margin-left:  .4rem;
+      margin-bottom: 10px;
+      line-height: 1;
+      border-bottom: 2px solid #79a7e2;
+    }
+    .abstract .abstract-heading{
+      color: rgb(93, 6, 255);
+      font-size: 1.3rem;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    .abstract .abstract-authors{
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+    .abstract .abstract-department{
+      margin-bottom: 10px;
+    }
+    .abstract .abstract-department__address-menu{
+      font-size: 1.1rem;
+      font-weight: bold;
+      text-decoration: underline;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    .abstract .abstract-department__address-content{
+      padding: 0 2rem;
+      font-size: .9rem;
+      font-style: italic;
+    }
+    .abstract .abstract-contact{
+      font-size: 1.1rem;
+      font-weight: bold;
+      /* text-decoration: underline; */
+    }
+    .abstract .abstract-tab{
+      /* padding: 0 1rem; */
+      font-size: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      margin-top: 1rem;
+    }
+    .abstract .abstract-tab__button{
+      display: flex;
+     
+    }
+    .abstract .abstract-tab__button > a{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 1rem;
+      border: 1px solid rgb(0, 110, 255);
+      line-height: 1.5;
+      font-size: 1rem;
+      padding: 5px;
+    }
+    .abstract .abstract-tab__button > a > *{
+      padding: 3px;
+    }
+    .abstract .abstract-tab__content{
+      display: flex;
+    flex-direction: column;
+    margin-top: .5rem;
+    }
+     /* end of abstract desing */
+
+     .abstract .abstract-tab__content .tab{
+      display: flex;
+    }
+    .abstract .abstract-tab__content .label {
+    margin-right: -1px;
+    border: 1px solid #ccc; 
+    border-bottom: 0;
+    padding: 5px;
+    text-align: center;
+    font-size: 1rem;
+    display: inline-block;
+    cursor: pointer;
+  }
+  .abstract .abstract-tab__content .box { 
+      height: 200px; 
+      border: 1px solid #ccc; 
+      scroll-behavior: smooth; 
+      overflow: hidden; 
+  }
+  .abstract .abstract-tab__content .content { 
+      height: 100%; 
+      padding: 0 20px; 
+      position: relative; 
+      overflow: hidden;
+  }
+  .abstract .abstract-tab__content .box input { 
+      position: absolute; top:0; 
+      height: 100%; width: 1px;
+      border:0; padding: 0; margin: 0;
+      clip: rect(0 0 0 0);
+  }
+
+
+  .display-none{
+    display: none !important;
+  }
+  
+
+  
+  </style>
+</head>
+<body>
+
+
+    <ul class="journalList">
+        <li>
+          <a href="javascript:void(0)" class="volume-heading">
+            Volume 31 - 33 , 2020
+          </a>
+          <ul class="journalSubList">
+            <li>
+              <a href="javascript:void(0)" class="issue-heading">
+                Issue - 1, 1 - 65 Pages, Jun-2020
+
+              </a>
+              <ul class="journalSubList">
+                <li>
+                  <div  class="abstract">
+                    <h4 class="abstract-heading">A Hypocrealean Fungus Penicillifer diparietisporus, First Reported in Bangladesh</h4>
+                    <p class="abstract-authors">MD Abdullah Al Noor,Md Rayhan,Md Arfan Shaheb,Md Rubel Mia,Md Manik Mia,Md Hassan Talukdar</p>
+                    <div class="abstract-department">
+                      <div class="abstract-department__address-menu " > <span>Department Address</span> <i class="fa fa-arrow-down"></i> </div>
+                      <ol  class="abstract-department__address-content display-none ">
+                        <li> A Hypocrealean Fungus Penicillifer diparietisporus, First Reported in Bangladesh</li>
+                        <li> A Hypocrealean Fungus Penicillifer diparietisporus, First Reported in Bangladesh</li>
+                      </ol>
+                    </div>
+                    <div class="abstract-contact">
+                      <a href="javascript:void(0)">
+                         <i class="fa fa-envelope"></i> 
+                         <span>baas@bd.org.com</span> </a>
+                    </div>
+                    <div class="abstract-tab">
+                      <div class="abstract-tab__button">
+                        <a href="javascript:void(0)"> <i class="fa fa-download"></i> <span>Download PDF</span> </a>
+                        <a href="javascript:void(0)" class="abstract-tab__content-view"> <i class="fa fa-eye"></i><span> View Article</span></a>
+                      </div>
+                      <div class="abstract-tab__content ">
+                        <!-- tab -->
+                        <div class="tab">
+                          <label class="label" for="tab1">Graphical Abstract</label>
+                          <label class="label" for="tab2">Abstract</label>
+                        </div>
+                        <div class="box">
+                            <div class="content"><input id="tab1">
+                                <p>Image</p>
+                            </div>
+                            <div class="content"><input id="tab2">
+                                <p>Content</p>
+                            </div>
+                        </div>
+                        <!-- end tab -->
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div  class="abstract">
+                    <h4 class="abstract-heading">A Hypocrealean Fungus Penicillifer diparietisporus, First Reported in Bangladesh</h4>
+                    <p class="abstract-authors">MD Abdullah Al Noor,Md Rayhan,Md Arfan Shaheb,Md Rubel Mia,Md Manik Mia,Md Hassan Talukdar</p>
+                    <div class="abstract-department">
+                      <div class="abstract-department__address-menu addressToggle" > <span>Department Address</span> <i class="fa fa-arrow-down"></i> </div>
+                      <ol  class="abstract-department__address-content display-none ">
+                        <li> A Hypocrealean Fungus Penicillifer diparietisporus, First Reported in Bangladesh</li>
+                        <li> A Hypocrealean Fungus Penicillifer diparietisporus, First Reported in Bangladesh</li>
+                      </ol>
+                    </div>
+                    <div class="abstract-contact">
+                      <a href="javascript:void(0)"> <i class="fa fa-envelope"></i> <span>baas@bd.org.com</span> </a>
+                    </div>
+                    <div class="abstract-tab">
+                      <div class="abstract-tab__button">
+                        <a href="javascript:void(0)"> <i class="fa fa-download"></i> <span>Download PDF</span> </a>
+                        <a href="javascript:void(0)" class="abstract-tab__content-view"> <i class="fa fa-eye"></i><span> View Article</span></a>
+                      </div>
+                      <div class="abstract-tab__content display-none">
+                        <!-- tab -->
+                        <div class="tab">
+                          <label class="label" for="tab1">Graphical Abstract</label>
+                          <label class="label" for="tab2">Abstract</label>
+                        </div>
+                        <div class="box">
+                            <div class="content"><input id="tab1">
+                                <p>Image</p>
+                            </div>
+                            <div class="content"><input id="tab2">
+                                <p>Content</p>
+                            </div>
+                        </div>
+                        <!-- end tab -->
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div  class="abstract">
+                    <h4 class="abstract-heading">A Hypocrealean Fungus Penicillifer diparietisporus, First Reported in Bangladesh</h4>
+                    <p class="abstract-authors">MD Abdullah Al Noor,Md Rayhan,Md Arfan Shaheb,Md Rubel Mia,Md Manik Mia,Md Hassan Talukdar</p>
+                    <div class="abstract-department">
+                      <div class="abstract-department__address-menu addressToggle" > <span>Department Address</span> <i class="fa fa-arrow-down"></i> </div>
+                      <ol  class="abstract-department__address-content display-none ">
+                        <li> A Hypocrealean Fungus Penicillifer diparietisporus, First Reported in Bangladesh</li>
+                        <li> A Hypocrealean Fungus Penicillifer diparietisporus, First Reported in Bangladesh</li>
+                      </ol>
+                    </div>
+                    <div class="abstract-contact">
+                      <a href="javascript:void(0)"> <i class="fa fa-envelope"></i> <span>baas@bd.org.com</span> </a>
+                    </div>
+                    <div class="abstract-tab">
+                      <div class="abstract-tab__button">
+                        <a href="javascript:void(0)"> <i class="fa fa-download"></i> <span>Download PDF</span> </a>
+                        <a href="javascript:void(0)" class="abstract-tab__content-view"> <i class="fa fa-eye"></i><span> View Article</span></a>
+                      </div>
+                      <div class="abstract-tab__content display-none">
+                        <!-- tab -->
+                        <div class="tab">
+                          <label class="label" for="tab1">Graphical Abstract</label>
+                          <label class="label" for="tab2">Abstract</label>
+                        </div>
+                        <div class="box">
+                            <div class="content"><input id="tab1">
+                                <p>Image</p>
+                            </div>
+                            <div class="content"><input id="tab2">
+                                <p>Content</p>
+                            </div>
+                        </div>
+                        <!-- end tab -->
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    
+
+      <script src="jquery-2.2.4.min.js"></script>
+
+      
+<script>
+    $(document).ready(function () {
+  
+    $(".journalList > li > a ").on("click", function (e) {
+      $(this).next().slideToggle();
+      $(".journalList > li > a ").not(this).next().slideUp();
+    })
+    $(".journalList > li > ul > li > a ").on("click", function (e) {
+      // e.pr
+      console.log($(this).next())
+      $(this).next().slideToggle();
+      $(".journalList > li > ul > li > a ").not(this).next().slideUp();
+    })
+  });
+  
+  $(document).on('click',function () {
+  
+  $(".viewAbstractToggleL" ).each(function(index,el) {
+  
+  // console.log('ok')
+  if(el.parentElement.nextElementSibling.classList.contains('showTabe')){
+    el.parentElement.nextElementSibling.classList.remove('showTabe');
+  }else{
+    el.parentElement.nextElementSibling.classList.add('showTabe');
+  }
+  
+  
+  });
+  
+  });
+
+
+
+
+
+// view articel tab script
+  
+  document.querySelectorAll(".abstract-tab__content-view").forEach(function(item){
+    item.addEventListener("click",function(e){
+      e.preventDefault();
+      if(e.target.parentElement.classList.contains('abstract-tab__content-view')){
+        abstractTabContentHide()
+        if( e.target.parentElement.parentElement.nextElementSibling.classList.contains('display-none')){
+          e.target.parentElement.parentElement.nextElementSibling.classList.remove('display-none');
+        }else{
+          e.target.parentElement.parentElement.nextElementSibling.classList.add('display-none');
+        }
+      }else{
+        e.preventDefault();
+      }
+    })
+  })
+  function abstractTabContentHide(){
+    document.querySelectorAll(".abstract-tab__content").forEach(function(item){
+      // console.log(item)
+      if(!item.classList.contains('display-none')){
+        item.classList.add('display-none');
+      }
+    })
+  }
+
+//end of view articel tab 
+
+
+//end of view address ol list script
+
+document.querySelectorAll(".abstract-department__address-menu").forEach(function(item){
+    item.addEventListener("click",function(e){
+      e.preventDefault();
+     
+      if(e.target.parentElement.classList.contains('abstract-department__address-menu')){
+        abstractDepartmentAddressContentHide();
+        if(e.target.parentElement.nextElementSibling.classList.contains("display-none")){
+          e.target.parentElement.nextElementSibling.classList.remove("display-none");
+        }else{
+          e.target.parentElement.nextElementSibling.classList.add("display-none");
+        }
+      }else{
+        return false;
+      }
+    })
+})
+
+function abstractDepartmentAddressContentHide(){
+  document.querySelectorAll(".abstract-department__address-content").forEach(function(item){
+    if(!item.classList.contains('display-none')){
+        item.classList.add('display-none');
+      }
+  })
+}
+
+//end of view address ol list script
+
+
+
+  </script>
+</body>
+</html>

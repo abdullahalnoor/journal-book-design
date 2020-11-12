@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    *,
+    *::after,
+    *::before {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .journalList{
+      width: 500px;
+    margin-left: 100px;
+    }
+    .journalList, .journalSubList {
+      list-style: none;
+      line-height: 1.5;
+    }
+
+    .journalList a {
+      text-decoration: none;
+      text-transform: none;
+  
+    }
+    .journalList {
+      display: flex;
+    }
+    .journalList > li {
+      line-height: 1.6;
+      position: relative;
+    }
+    .journalSubList > li {
+      line-height: 1.6;
+     
+    }
+    .journalList a {
+      display: block;
+    
+      color: rgba(0, 0, 0, 0.931);
+    }
+ 
+    .journalSubList::before {
+      content: '';
+      position: absolute;
+      /* left: 3rem; */
+      top: -2.4rem;
+    }
+  
+  
+  
+    .journalSubList li:hover>.journalSubList {
+      top: 0;
+      left: 100%;
+    }
+    .journalList {
+      z-index: 1000;
+      flex-direction: column;
+    }
+  
+    .journalSubList {
+      position: initial;
+      /* margin-left: 1rem; */
+      opacity: initial;
+      visibility: initial;
+      display: none;
+      transition: initial;
+  
+    }
+  
+    .journalSubList::before {
+      display: none;
+    }
+
+    .journalSubList {
+      border-left: 2px dotted #d6d6d6;
+    }
+    
+    .journalSubList>li>a {
+      text-decoration: underline;
+    }
+    .journalSubList .journalSubList {
+      border-left: none;
+    }
+    .journalSubList .journalSubList>li>a {
+      color: #000;
+      text-decoration: none;
+    }
+    /* end of menu */
+
+    a.volume-heading{
+      color: #017fe1;
+      padding: 0 1rem;
+      font-size: 1.5rem;
+    }
+    a.issue-heading{
+      color: #FBAA01;
+      padding: 0 1rem;
+      font-size: 1rem;
+    }
+
+    /* abstact desing */
+    .abstract{
+      padding: 0 5px 1rem;
+      display: flex;
+      flex-direction: column;
+      margin-left:  .4rem;
+      margin-bottom: 10px;
+      line-height: 1;
+      border-bottom: 2px solid #79a7e2;
+    }
+    .abstract .abstract-note__title{
+      /* padding: 0  1rem; */
+      font-size: 1.3rem;
+      line-height: 1;
+      margin: 5px 0px;
+      display: inline-block;
+    }
+    .abstract .abstract-note__content{
+      font-size: 1rem;
+      line-height: 1;
+    }
+    .abstract .abstract-heading{
+      color:#017fe1;
+      font-size: 1.3rem;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    .abstract .abstract-authors{
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+    .abstract .abstract-authors-star{
+      color:#FBAA01;
+    }
+    .abstract .abstract-department{
+      margin-bottom: 10px;
+    }
+    .abstract .abstract-department__address-menu{
+      font-size: 1rem;
+      font-weight: bold;
+      /* text-decoration: underline; */
+      border-bottom: 1px solid #c5c4c4ec;
+      display: inline-block;
+      padding: 5px;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    .abstract .abstract-department__address-content{
+      padding: 0 2rem;
+      font-size: .9rem;
+      font-style: italic;
+    }
+    .abstract .abstract-contact{
+      font-size: 1.1rem;
+      font-weight: bold;
+      
+      /* text-decoration: underline; */
+    }
+    .abstract .abstract-contact > i ,
+    .abstract .abstract-contact > a{
+      color:#FBAA01;
+    }
+    .abstract .abstract-tab{
+      /* padding: 0 1rem; */
+      font-size: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      margin-top: 1rem;
+    }
+    .abstract .abstract-tab__button{
+      display: flex;
+     
+    }
+    .abstract .abstract-tab__button > a{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: .4rem;
+      border: 1px solid #c5c4c4ec;
+      line-height: 1.3;
+      font-size: 1rem;
+      padding: 3px;
+    }
+    .abstract .abstract-tab__button > a > *{
+      padding: 3px;
+    }
+    .abstract .abstract-tab__content{
+      display: flex;
+    flex-direction: column;
+    margin-top: .5rem;
+    /* scroll-behavior: smooth; 
+    opacity: 1;
+    transition: all .5s ease; */
+    }
+     /* end of abstract desing */
+
+     .abstract .abstract-tab__content .tab{
+      display: flex;
+    }
+    .abstract .abstract-tab__content .label {
+    margin-right: -1px;
+    border: 1px solid #ccc; 
+    border-bottom: 0;
+    padding: 5px;
+    text-align: center;
+    font-size: 1rem;
+    display: inline-block;
+    cursor: pointer;
+  }
+  .abstract .abstract-tab__content .box { 
+      height: 200px; 
+      border: 1px solid #ccc; 
+      scroll-behavior: smooth; 
+      overflow: hidden; 
+  }
+  .abstract .abstract-tab__content .content { 
+      height: 100%; 
+      padding: 0 20px; 
+      position: relative; 
+      overflow: hidden;
+  }
+  .abstract .abstract-tab__content .box input { 
+      position: absolute; top:0; 
+      height: 100%; width: 1px;
+      border:0; padding: 0; margin: 0;
+      clip: rect(0 0 0 0);
+  }
+
+
+  .display-none{
+    display: none !important;
+  }
+  
+
+  
+  </style>
+</head>
+<body>
+
+ <div class="abstract">
+  <div class="abstract-tab">
+    <div class="abstract-tab__button">
+      <a href="javascript:void(0)"> <i class="fa fa-download"></i> <span>Download PDF</span> </a>
+      <a href="javascript:void(0)" class="abstract-tab__content-view"> <i class="fa fa-eye"></i><span> View Article</span></a>
+    </div>
+    <div class="abstract-tab__content " data-key="0">
+      <!-- tab -->
+      <div class="tab">
+        <label class="label" for="tab1">Graphical Abstract</label>
+        <label class="label" for="tab2">Abstract</label>
+      </div>
+      <div class="box">
+          <div class="content"><input id="tab1">
+              <p>Image</p>
+          </div>
+          <div class="content"><input id="tab2">
+              <p>Content</p>
+          </div>
+      </div>
+      <!-- end tab -->
+    </div>
+  </div>
+  <div class="abstract-tab">
+    <div class="abstract-tab__button">
+      <a href="javascript:void(0)"> <i class="fa fa-download"></i> <span>Download PDF</span> </a>
+      <a href="javascript:void(0)" class="abstract-tab__content-view"> <i class="fa fa-eye"></i><span> View Article</span></a>
+    </div>
+    <div class="abstract-tab__content display-none" data-key="1">
+      <!-- tab -->
+      <div class="tab">
+        <label class="label" for="tab5">Graphical Abstract</label>
+        <label class="label" for="tab6">Abstract</label>
+      </div>
+      <div class="box">
+          <div class="content"><input id="tab5">
+              <p>Image</p>
+          </div>
+          <div class="content"><input id="tab6">
+              <p>Content</p>
+          </div>
+      </div>
+      <!-- end tab -->
+    </div>
+  </div>
+  <div class="abstract-tab">
+    <div class="abstract-tab__button">
+      <a href="javascript:void(0)"> <i class="fa fa-download"></i> <span>Download PDF</span> </a>
+      <a href="javascript:void(0)" class="abstract-tab__content-view"> <i class="fa fa-eye"></i><span> View Article</span></a>
+    </div>
+    <div class="abstract-tab__content display-none" data-key="2">
+      <!-- tab -->
+      <div class="tab">
+        <label class="label" for="tab3">Graphical Abstract</label>
+        <label class="label" for="tab4">Abstract</label>
+      </div>
+      <div class="box">
+          <div class="content"><input id="tab3">
+              <p>Image</p>
+          </div>
+          <div class="content"><input id="tab4">
+              <p>Content</p>
+          </div>
+      </div>
+      <!-- end tab -->
+    </div>
+  </div>
+ </div>
+      <script src="jquery-2.2.4.min.js"></script>
+
+      
+<script>
+    
+
+// view articel tab script
+  
+  document.querySelectorAll(".abstract-tab__content-view").forEach(function(item){
+    item.addEventListener("click",function(e){
+      e.preventDefault();
+      if(e.target.parentElement.classList.contains('abstract-tab__content-view')){
+        let dataKey = 0;
+        dataKey = +e.target.parentElement.parentElement.nextElementSibling.getAttribute('data-key');
+        abstractTabContentHide(dataKey)
+        e.target.parentElement.parentElement.nextElementSibling.classList.toggle('display-none');
+        return false;
+      }else{
+        e.preventDefault();
+      }
+    })
+  })
+  function abstractTabContentHide(key){
+      
+    document.querySelectorAll(".abstract-tab__content").forEach(function(item){
+      // console.log(item.getAttribute('data-key'))
+      let currentKey = +item.getAttribute('data-key');
+      if(currentKey != key){
+        if(!item.classList.contains('display-none')){
+          item.classList.add('display-none');
+           return false;
+        }
+        return false;
+      }
+      return false;
+    }) ; 
+    return false;
+  }
+
+//end of view articel tab 
+
+
+
+  </script>
+</body>
+</html>
